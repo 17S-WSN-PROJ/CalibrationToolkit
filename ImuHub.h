@@ -1,12 +1,9 @@
-#ifndef CAMERAHUB
-#define CAMERAHUB
+#ifndef IMUHUB
+#define IMUHUB
 
 //=================================================
 //Please add headers here:
-#include<opencv2/opencv.hpp>
-#include<sensor_msgs/Image.h>
-#include<cv_bridge/cv_bridge.h>
-#include<rosinterface.h>
+#include"imuserialportreader.h"
 
 //=================================================
 #include<RobotSDK.h>
@@ -17,7 +14,7 @@ namespace RobotSDK_Module
 //Node configuration
 
 #undef NODE_CLASS
-#define NODE_CLASS CameraHub
+#define NODE_CLASS ImuHub
 
 #undef INPUT_PORT_NUM
 #define INPUT_PORT_NUM 0
@@ -43,19 +40,13 @@ class NODE_PARAMS_TYPE : public NODE_PARAMS_BASE_TYPE
 class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
-    ADD_VAR(QString, calibfilename, "")
+    ADD_VAR(QString, portname, "ttyUSB1")
+    ADD_ENUM_VAR_WITH_OPTIONS(QSerialPort::BaudRate, baudrate, QSerialPort::Baud115200, QList<QSerialPort::BaudRate>()
+                              <<QSerialPort::Baud1200<<QSerialPort::Baud2400<<QSerialPort::Baud4800<<QSerialPort::Baud9600
+                              <<QSerialPort::Baud19200<<QSerialPort::Baud38400<<QSerialPort::Baud57600<<QSerialPort::Baud115200)
 public:
-    cv::Mat extrinsicmat;
-    cv::Mat cameramat;
-    cv::Mat distcoeff;
-public:
-    ADD_VAR(QString, topic, "/image_raw")
-    ADD_VAR(u_int32_t, queuesize, 1000)
-    ADD_VAR(int, queryinterval, 10)
-public:
-    typedef ROSSub<sensor_msgs::ImageConstPtr> rossub;
-    ADD_INTERNAL_QOBJECT_TRIGGER(rossub, camerasub, 1, topic, queuesize, queryinterval)
-    ADD_INTERNAL_DEFAULT_CONNECTION(camerasub, receiveMessageSignal)
+    ADD_INTERNAL_QOBJECT_TRIGGER(ImuSerialPortReader, port, 1)
+    ADD_INTERNAL_DEFAULT_CONNECTION(port, signalImuReceived)
 };
 
 //=================================================
@@ -66,15 +57,7 @@ public:
 class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
 {
 public:
-    cv::Mat cvimage;
-public:
-    cv::Mat extrinsicmat;
-    cv::Mat cameramat;
-    cv::Mat distcoeff;
-public:
-    cv::Size originalsize;
-    double rotation=0;
-    double scale=1;
+    QByteArray message;
 };
 
 //=================================================

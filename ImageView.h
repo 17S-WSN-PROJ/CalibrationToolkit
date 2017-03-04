@@ -1,12 +1,13 @@
-#ifndef CAMERAHUB
-#define CAMERAHUB
+#ifndef IMAGEVIEW
+#define IMAGEVIEW
 
 //=================================================
 //Please add headers here:
-#include<opencv2/opencv.hpp>
-#include<sensor_msgs/Image.h>
-#include<cv_bridge/cv_bridge.h>
-#include<rosinterface.h>
+#include"CameraHub.h"
+#include<QRgb>
+#include<QScrollArea>
+#include<QTabWidget>
+#include<QLabel>
 
 //=================================================
 #include<RobotSDK.h>
@@ -17,13 +18,13 @@ namespace RobotSDK_Module
 //Node configuration
 
 #undef NODE_CLASS
-#define NODE_CLASS CameraHub
+#define NODE_CLASS ImageView
 
 #undef INPUT_PORT_NUM
-#define INPUT_PORT_NUM 0
+#define INPUT_PORT_NUM 1
 
 #undef OUTPUT_PORT_NUM
-#define OUTPUT_PORT_NUM 1
+#define OUTPUT_PORT_NUM 0
 
 //=================================================
 //Params types configuration
@@ -43,19 +44,12 @@ class NODE_PARAMS_TYPE : public NODE_PARAMS_BASE_TYPE
 class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
-    ADD_VAR(QString, calibfilename, "")
+    QVector<QRgb> colortable;
 public:
-    cv::Mat extrinsicmat;
-    cv::Mat cameramat;
-    cv::Mat distcoeff;
-public:
-    ADD_VAR(QString, topic, "/image_raw")
-    ADD_VAR(u_int32_t, queuesize, 1000)
-    ADD_VAR(int, queryinterval, 10)
-public:
-    typedef ROSSub<sensor_msgs::ImageConstPtr> rossub;
-    ADD_INTERNAL_QOBJECT_TRIGGER(rossub, camerasub, 1, topic, queuesize, queryinterval)
-    ADD_INTERNAL_DEFAULT_CONNECTION(camerasub, receiveMessageSignal)
+    ADD_QLAYOUT(QHBoxLayout, layout)
+    ADD_QWIDGET(QTabWidget, tabwidget)
+    ADD_QWIDGET(QScrollArea, scrollarea)
+    ADD_QWIDGET(QLabel, viewer, "Image View")
 };
 
 //=================================================
@@ -65,16 +59,7 @@ public:
 //NODE_DATA_TYPE_REF(RefNodeClassName)
 class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
 {
-public:
-    cv::Mat cvimage;
-public:
-    cv::Mat extrinsicmat;
-    cv::Mat cameramat;
-    cv::Mat distcoeff;
-public:
-    cv::Size originalsize;
-    double rotation=0;
-    double scale=1;
+
 };
 
 //=================================================

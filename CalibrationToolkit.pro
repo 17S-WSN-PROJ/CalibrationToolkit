@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets opengl xml
+QT       += widgets opengl xml serialport
 
 TARGET = CalibrationToolkit
 TEMPLATE = lib
@@ -12,10 +12,20 @@ TEMPLATE = lib
 DEFINES += CALIBRATIONTOOLKIT_LIBRARY
 
 SOURCES += \
-    CameraHub.cpp
+    CameraHub.cpp \
+    ImageView.cpp \
+    ImuHub.cpp \
+    ImuDecoder.cpp \
+    imuserialportreader.cpp \
+    ImuMessageView.cpp
 
 HEADERS += \
-    CameraHub.h
+    CameraHub.h \
+    ImageView.h \
+    ImuHub.h \
+    ImuDecoder.h \
+    imuserialportreader.h \
+    ImuMessageView.h
 
 
 INCLUDEPATH += /usr/local/include
