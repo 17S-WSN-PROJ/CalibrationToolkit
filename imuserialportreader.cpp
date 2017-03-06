@@ -66,7 +66,7 @@ void ImuSerialPortReader::slotStartImu()
     messagequeue.clear();
     if(this->open(QIODevice::ReadOnly))
     {
-        while(checkReceiveFlag()&&this->waitForReadyRead())
+        while(checkReceiveFlag()&&this->waitForReadyRead(30000))
         {
             while(this->canReadLine())
             {
