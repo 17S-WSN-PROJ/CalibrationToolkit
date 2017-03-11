@@ -18,7 +18,9 @@ SOURCES += \
     ImuDecoder.cpp \
     imuserialportreader.cpp \
     ImuMessageView.cpp \
-    ImuRos.cpp
+    ImuRos.cpp \
+    CameraCalibration.cpp \
+    cameracalibrationwidget.cpp
 
 HEADERS += \
     CameraHub.h \
@@ -27,13 +29,15 @@ HEADERS += \
     ImuDecoder.h \
     imuserialportreader.h \
     ImuMessageView.h \
-    ImuRos.h
+    ImuRos.h \
+    CameraCalibration.h \
+    cameracalibrationwidget.h
 
 
 INCLUDEPATH += /usr/local/include
 
 LIBS += -L/usr/local/lib \
-    -lopencv_core -lopencv_highgui
+    -lopencv_core -lopencv_highgui -lopencv_calib3d -lopencv_imgproc
 
 
 include($$(HOME)/SDK/RobotSDK_4.0/Kernel/RobotSDK.pri)

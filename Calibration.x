@@ -1,4 +1,4 @@
-N,CameraCalibration::CameraCalibration, ,Config.xml,1,0
+N,CameraCalibration::CameraCalibration,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,CameraHub::Camera1,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
 N,ImageView::Viewer,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,ImuCalibration::calibration, ,Config.xml,2,0
