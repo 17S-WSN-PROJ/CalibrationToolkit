@@ -1,9 +1,8 @@
-#ifndef IMUDECODER
-#define IMUDECODER
+#ifndef IMUCALIBRATION
+#define IMUCALIBRATION
 
 //=================================================
 //Please add headers here:
-#include<ImuHub.h>
 
 
 //=================================================
@@ -15,13 +14,13 @@ namespace RobotSDK_Module
 //Node configuration
 
 #undef NODE_CLASS
-#define NODE_CLASS ImuDecoder
+#define NODE_CLASS ImuCalibration
 
 #undef INPUT_PORT_NUM
-#define INPUT_PORT_NUM 1
+#define INPUT_PORT_NUM 2
 
 #undef OUTPUT_PORT_NUM
-#define OUTPUT_PORT_NUM 1
+#define OUTPUT_PORT_NUM 0
 
 //=================================================
 //Params types configuration
@@ -50,11 +49,7 @@ class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 //NODE_DATA_TYPE_REF(RefNodeClassName)
 class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
 {
-public:
-    quint64 timestamp;
-    double ax,ay,az;
-    double rx,ry,rz;
-    double qw,qx,qy,qz;
+
 };
 
 //=================================================

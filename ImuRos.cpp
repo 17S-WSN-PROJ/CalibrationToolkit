@@ -17,7 +17,7 @@ NODE_FUNC_DEF_EXPORT(bool, initializeNode)
 {
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
-    if(vars->imupub==NULL)
+    if(vars->imupub==NULL||vars->posepub==NULL)
     {
         return 0;
     }
@@ -30,11 +30,12 @@ NODE_FUNC_DEF_EXPORT(bool, openNode)
 {
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
-    if(vars->imupub==NULL)
+    if(vars->imupub==NULL||vars->posepub==NULL)
     {
         return 0;
     }
-    vars->imupub->resetTopic(vars->topic,vars->queuesize);
+    vars->imupub->resetTopic(vars->imutopic,vars->queuesize);
+    vars->posepub->resetTopic(vars->posetopic,vars->queuesize);
     vars->seqid=0;
 	return 1;
 }
@@ -45,20 +46,30 @@ NODE_FUNC_DEF_EXPORT(bool, main)
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
     auto data=PORT_DATA(0,0);
-    sensor_msgs::Imu msg;
-    msg.header.seq=vars->seqid++;
-    msg.header.frame_id=vars->frame_id.toStdString();
-    msg.header.stamp.fromNSec(data->timestamp*1000000);
-    msg.orientation.x=data->qx;
-    msg.orientation.y=data->qy;
-    msg.orientation.z=data->qz;
-    msg.orientation.w=data->qw;
-    msg.angular_velocity.x=data->rx;
-    msg.angular_velocity.y=data->ry;
-    msg.angular_velocity.z=data->rz;
-    msg.linear_acceleration.x=data->ax;
-    msg.linear_acceleration.y=data->ay;
-    msg.linear_acceleration.z=data->az;
-    vars->imupub->sendMessage(msg);
+
+    sensor_msgs::Imu imumsg;
+    imumsg.header.seq=vars->seqid++;
+    imumsg.header.frame_id=vars->frame_id.toStdString();
+    imumsg.header.stamp.fromNSec(data->timestamp*1000000);
+    imumsg.linear_acceleration.x=data->ax;
+    imumsg.linear_acceleration.y=data->ay;
+    imumsg.linear_acceleration.z=data->az;
+    imumsg.angular_velocity.x=data->rx;
+    imumsg.angular_velocity.y=data->ry;
+    imumsg.angular_velocity.z=data->rz;
+    imumsg.orientation.w=data->qw;
+    imumsg.orientation.x=data->qx;
+    imumsg.orientation.y=data->qy;
+    imumsg.orientation.z=data->qz;
+    vars->imupub->sendMessage(imumsg);
+
+    geometry_msgs::PoseStamped posemsg;
+    posemsg.header=imumsg.header;
+    posemsg.pose.position.x=0;
+    posemsg.pose.position.y=0;
+    posemsg.pose.position.z=0;
+    posemsg.pose.orientation=imumsg.orientation;
+    vars->posepub->sendMessage(posemsg);
+
 	return 1;
 }

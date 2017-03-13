@@ -66,10 +66,9 @@ NODE_EXFUNC_DEF_EXPORT(bool, main, RazorASCII)
     outputdata->rx=imudata[4].trimmed().toDouble();
     outputdata->ry=imudata[5].trimmed().toDouble();
     outputdata->rz=imudata[6].trimmed().toDouble();
-    outputdata->qx=imudata[7].trimmed().toDouble();
-    outputdata->qy=imudata[8].trimmed().toDouble();
-    outputdata->qz=imudata[9].trimmed().toDouble();
-    outputdata->qw=imudata[10].trimmed().toDouble();
-
+    outputdata->qw=imudata[7].trimmed().toDouble();
+    outputdata->qx=imudata[8].trimmed().toDouble();
+    outputdata->qy=imudata[9].trimmed().toDouble();
+    outputdata->qz=imudata[10].trimmed().toDouble();
 	return 1;
 }

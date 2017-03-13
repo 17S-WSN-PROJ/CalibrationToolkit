@@ -5,6 +5,7 @@
 //Please add headers here:
 #include<ImuDecoder.h>
 #include<sensor_msgs/Imu.h>
+#include<geometry_msgs/PoseStamped.h>
 #include<rosinterface.h>
 
 //=================================================
@@ -43,12 +44,16 @@ class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
     int seqid;
+//    double initx,inity,initz;
     ADD_VAR(QString, frame_id, "/imudecoder")
-    ADD_VAR(QString, topic, "/imumsg")
+    ADD_VAR(QString, imutopic, "/imu")
+    ADD_VAR(QString, posetopic, "/imupose")
     ADD_VAR(u_int32_t, queuesize, 1000)
 public:
-    typedef ROSPub<sensor_msgs::Imu> rospub;
-    ADD_INTERNAL_QOBJECT_TRIGGER(rospub, imupub, 1, topic, queuesize)
+    typedef ROSPub<sensor_msgs::Imu> rosimupub;
+    ADD_INTERNAL_QOBJECT_TRIGGER(rosimupub,imupub,1,imutopic,queuesize)
+    typedef ROSPub<geometry_msgs::PoseStamped> rosposepub;
+    ADD_INTERNAL_QOBJECT_TRIGGER(rosposepub,posepub,1,posetopic,queuesize)
 };
 
 //=================================================
