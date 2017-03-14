@@ -43,9 +43,9 @@ class NODE_PARAMS_TYPE : public NODE_PARAMS_BASE_TYPE
 class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
+    ADD_VAR(int, deviceid, 0)
     int seqid;
-//    double initx,inity,initz;
-    ADD_VAR(QString, frame_id, "/imudecoder")
+    ADD_VAR(QString, frame_id, "/imu")
     ADD_VAR(QString, imutopic, "/imu")
     ADD_VAR(QString, posetopic, "/imupose")
     ADD_VAR(u_int32_t, queuesize, 1000)

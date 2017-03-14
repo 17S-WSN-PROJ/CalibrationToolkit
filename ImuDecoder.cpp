@@ -60,12 +60,16 @@ NODE_EXFUNC_DEF_EXPORT(bool, main, RazorASCII)
     auto outputdata = NODE_DATA;
     QList<QByteArray> imudata=portdata->message.split(',');
     outputdata->timestamp=imudata[0].trimmed().toUInt();
+    outputdata->deviceid=0;
     outputdata->ax=imudata[1].trimmed().toDouble();
     outputdata->ay=imudata[2].trimmed().toDouble();
     outputdata->az=imudata[3].trimmed().toDouble();
     outputdata->rx=imudata[4].trimmed().toDouble();
     outputdata->ry=imudata[5].trimmed().toDouble();
     outputdata->rz=imudata[6].trimmed().toDouble();
+    outputdata->x=0;
+    outputdata->y=0;
+    outputdata->z=0;
     outputdata->qw=imudata[7].trimmed().toDouble();
     outputdata->qx=imudata[8].trimmed().toDouble();
     outputdata->qy=imudata[9].trimmed().toDouble();

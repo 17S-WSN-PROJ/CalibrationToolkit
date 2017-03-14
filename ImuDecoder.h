@@ -52,8 +52,10 @@ class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
 {
 public:
     quint64 timestamp;
+    int deviceid;
     double ax,ay,az;
     double rx,ry,rz;
+    double x,y,z;
     double qw,qx,qy,qz;
 };
 
