@@ -14,7 +14,7 @@ ImuCalibrationWidget::ImuCalibrationWidget(QString devices, QString intrinsicfil
     {
         devicemap.insert(devicelist[i],i);
     }
-    imuposes.resize(n);
+    imus.resize(n);
     imageposes.resize(n);
 }
 
