@@ -13,6 +13,9 @@
 #include <QTime>
 #include <QMap>
 #include <glviewer.h>
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
 
 #include <opencv2/opencv.hpp>
 
@@ -29,31 +32,18 @@ struct ImuStamped
     double qw,qx,qy,qz;
 };
 
-struct ImuCalibData
-{
-    int imageid;
-    cv::Point2f imagepose;
-};
-
-
 class ImuCalibrationWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit ImuCalibrationWidget(QString devices, QString intrinsicfilename, QWidget *parent = 0);
+    explicit ImuCalibrationWidget(QString devices, QWidget *parent = 0);
 protected:
-    cv::Mat cameramat;
-    cv::Mat distcoeff;
-protected:
-    QVector<cv::Mat> initposes;
-    QVector<cv::Mat> initvelocity;
-protected:
+    QList<QString> devicelist;
     QMap<QString,int> devicemap;
 protected:
+    bool recordflag;
     QVector<CvImageStamped> images;
     QVector<QVector<ImuStamped> > imus;
-protected:
-    QVector<QVector<ImuCalibData> > imageposes;
 protected:
     QVBoxLayout * layout;
     QSplitter * splitter;
@@ -62,22 +52,35 @@ protected:
     QLabel * imageview;
 
     QTabWidget * imuviewtabs;
+    float axespts[18]={0,0,0
+                      ,1,0,0
+                      ,0,0,0
+                      ,0,1,0
+                      ,0,0,0
+                      ,0,0,1};
+    float axeclrs[18]={1,0,0
+                      ,1,0,0
+                      ,0,1,0
+                      ,0,1,0
+                      ,0,0,1
+                      ,0,0,1};
     QVector<RobotSDK::GLViewer *> imuviewers;
+    QVector<GLuint> imudisplist;
 
     QTableWidget * calibdataview;
 
     QHBoxLayout * btnlayout;
-    QPushButton * btncalib;
-    QPushButton * btnproject;
+    QPushButton * btnstart;
+    QPushButton * btnsave;
 
 public:
     void addImage(CvImageStamped & image);
     void addImu(ImuStamped & imu, QString deviceid);
+    void clearData();
 
-signals:
-
-public slots:
-
+public Q_SLOTS:
+    void slotStartRecord();
+    void slotSaveRecord();
 };
 
 #endif // IMUCALIBRATIONWIDGET_H

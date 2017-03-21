@@ -51,8 +51,8 @@ class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
 {
 public:
-    quint64 timestamp;
-    int deviceid;
+    quint64 imutimestamp;
+    QString deviceid;
     double ax,ay,az;
     double rx,ry,rz;
     double x,y,z;

@@ -44,6 +44,7 @@ class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
     ADD_VAR(QString, calibfilename, "")
+    ADD_VAR(int, utcoffset, -4)
 public:
     cv::Mat extrinsicmat;
     cv::Mat cameramat;

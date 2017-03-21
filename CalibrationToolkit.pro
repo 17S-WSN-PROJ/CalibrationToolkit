@@ -41,7 +41,7 @@ HEADERS += \
 INCLUDEPATH += /usr/local/include
 
 LIBS += -L/usr/local/lib \
-    -lopencv_core -lopencv_highgui -lopencv_calib3d -lopencv_imgproc
+    -lopencv_core -lopencv_highgui -lopencv_calib3d -lopencv_imgproc -lopencv_videoio
 
 
 include($$(HOME)/SDK/RobotSDK_4.0/Kernel/RobotSDK.pri)

@@ -84,7 +84,7 @@ NODE_FUNC_DEF_EXPORT(bool, main)
         return 0;
     }
 
-    int msec=(rosimage->header.stamp.sec)%(24*60*60)*1000+(rosimage->header.stamp.nsec)/1000000;
+    int msec=(rosimage->header.stamp.sec+vars->utcoffset*60*60)%(24*60*60)*1000+(rosimage->header.stamp.nsec)/1000000;
     outputdata->timestamp=QTime::fromMSecsSinceStartOfDay(msec);
 
     outputdata->cvimage=cv_bridge::toCvShare(rosimage)->image.clone();

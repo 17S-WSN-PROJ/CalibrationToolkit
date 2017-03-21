@@ -43,7 +43,7 @@ public:
     ADD_VAR(QString, portname, "ttyUSB1")
     ADD_ENUM_VAR_WITH_OPTIONS(QSerialPort::BaudRate, baudrate, QSerialPort::Baud115200, QList<QSerialPort::BaudRate>()
                               <<QSerialPort::Baud1200<<QSerialPort::Baud2400<<QSerialPort::Baud4800<<QSerialPort::Baud9600
-                              <<QSerialPort::Baud19200<<QSerialPort::Baud38400<<QSerialPort::Baud57600<<QSerialPort::Baud115200)
+                              <<QSerialPort::Baud19200<<QSerialPort::Baud38400<<QSerialPort::Baud57600<<QSerialPort::Baud115200)    
 public:
     ADD_INTERNAL_QOBJECT_TRIGGER(ImuSerialPortReader, port, 1)
     ADD_INTERNAL_DEFAULT_CONNECTION(port, signalImuReceived)

@@ -47,6 +47,7 @@ NODE_FUNC_DEF_EXPORT(bool, main)
     auto vars=NODE_VARS;
     auto outputdata=NODE_DATA;
 
+    outputdata->timestamp=QTime::currentTime();
     outputdata->message=vars->port->getImuMessage();
 	return 1;
 }

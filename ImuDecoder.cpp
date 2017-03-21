@@ -58,9 +58,10 @@ NODE_EXFUNC_DEF_EXPORT(bool, main, RazorASCII)
 	NOUNUSEDWARNING;
     auto portdata = PORT_DATA(0,0);
     auto outputdata = NODE_DATA;
+    outputdata->timestamp=portdata->timestamp;
     QList<QByteArray> imudata=portdata->message.split(',');
-    outputdata->timestamp=imudata[0].trimmed().toUInt();
-    outputdata->deviceid=0;
+    outputdata->imutimestamp=imudata[0].trimmed().toUInt();
+    outputdata->deviceid="0";
     outputdata->ax=imudata[1].trimmed().toDouble();
     outputdata->ay=imudata[2].trimmed().toDouble();
     outputdata->az=imudata[3].trimmed().toDouble();
