@@ -26,12 +26,12 @@ struct ImuStamped
 {
     QTime timestamp;
     double ax,ay,az;
-    double rx,ry,rz;
+    double qw,qx,qy,qz;
 };
 
 struct ImuCalibData
 {
-    geometry_msgs::PoseStamped imupose;
+    int imageid;
     cv::Point2f imagepose;
 };
 
@@ -51,8 +51,7 @@ protected:
     QMap<QString,int> devicemap;
 protected:
     QVector<CvImageStamped> images;
-    QVector<QVector<
-    QVector<QVector<geometry_msgs::PoseStamped> > imus;
+    QVector<QVector<ImuStamped> > imus;
 protected:
     QVector<QVector<ImuCalibData> > imageposes;
 protected:
