@@ -52,7 +52,7 @@ protected:
 protected:
     QVector<CvImageStamped> images;
     QVector<QVector<
-    QVector<QVector<geometry_msgs::PoseStamped> > imuposes;
+    QVector<QVector<geometry_msgs::PoseStamped> > imus;
 protected:
     QVector<QVector<ImuCalibData> > imageposes;
 protected:
@@ -70,9 +70,15 @@ protected:
     QHBoxLayout * btnlayout;
     QPushButton * btncalib;
     QPushButton * btnproject;
+
+public:
+    void addImage(CvImageStamped & image);
+    void addImu(ImuStamped & imu, QString deviceid);
+
 signals:
 
 public slots:
+
 };
 
 #endif // IMUCALIBRATIONWIDGET_H

@@ -1,0 +1,39 @@
+#include "imucalibrationwidget.h"
+
+ImuCalibrationWidget::ImuCalibrationWidget(QString devices, QString intrinsicfilename, QWidget *parent)
+    : QWidget(parent)
+{
+    cv::FileStorage fs(intrinsicfilename.toStdString(),cv::FileStorage::READ);
+    fs["CameraMat"]>>cameramat;
+    fs["DistCoeff"]>>distcoeff;
+    fs.release();
+
+    QList<QString> devicelist=devices.split(",",QString::SkipEmptyParts);
+    int n=devicelist.size();
+    for(int i=0;i<n;i++)
+    {
+        devicemap.insert(devicelist[i],i);
+    }
+    imuposes.resize(n);
+    imageposes.resize(n);
+
+    layout = new QVBoxLayout();
+    splitter = new QSplitter();
+
+    scrollarea = new QScrollArea();
+    splitter->addWidget(scrollarea);
+    imageview = new QLabel("Image");
+    scrollarea->setWidget(imageview);
+
+    imuviewtabs = new QTabWidget();
+    splitter->addWidget(imuviewtabs);
+    imuviewers.resize(n);
+    for(int i=0;i<n;i++)
+    {
+        imuviewers[i] = new RobotSDK::GLViewer();
+        imuviewtabs->addTab(imuviewers[i],QString("IMU %1").arg(i));
+    }
+
+
+}
+
