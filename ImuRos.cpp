@@ -52,7 +52,9 @@ NODE_FUNC_DEF_EXPORT(bool, main)
         sensor_msgs::Imu imumsg;
         imumsg.header.seq=vars->seqid++;
         imumsg.header.frame_id=vars->frame_id.toStdString();
-        imumsg.header.stamp.fromNSec(data->timestamp.msecsSinceStartOfDay()*1000000);
+        int msec=data->timestamp.msecsSinceStartOfDay();
+        imumsg.header.stamp.sec=msec/1000;
+        imumsg.header.stamp.nsec=(msec%1000)*1000000;
         imumsg.linear_acceleration.x=data->ax;
         imumsg.linear_acceleration.y=data->ay;
         imumsg.linear_acceleration.z=data->az;

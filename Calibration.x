@@ -5,12 +5,14 @@ N,ImuCalibration::calibration,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/Calibra
 N,ImuDecoder::IMUDecoder::RazorASCII,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,1
 N,ImuDecoder::IMUDecoder::RazorFireFly, ,Config.xml,1,1
 N,ImuHub::IMU,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
+N,ImuLogger::IMULogger,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,ImuMessageView::Viewer,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,ImuRos::IMUROS,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 E,CameraHub::Camera1,0,CameraCalibration::CameraCalibration,0
 E,CameraHub::Camera1,0,ImageView::Viewer,0
 E,CameraHub::Camera1,0,ImuCalibration::calibration,0
 E,ImuDecoder::IMUDecoder::RazorASCII,0,ImuCalibration::calibration,1
+E,ImuDecoder::IMUDecoder::RazorASCII,0,ImuLogger::IMULogger,0
 E,ImuDecoder::IMUDecoder::RazorASCII,0,ImuRos::IMUROS,0
 E,ImuDecoder::IMUDecoder::RazorFireFly,0,ImuRos::IMUROS,0
 E,ImuHub::IMU,0,ImuDecoder::IMUDecoder::RazorASCII,0
