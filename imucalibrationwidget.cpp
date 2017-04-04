@@ -143,7 +143,7 @@ void ImuCalibrationWidget::slotSaveRecord()
         for(int i=0;i<images.size();i++)
         {
             video<<images[i].image;
-            stream<<images[i].timestamp.toString("HH:mm:ss:zzz\n");
+            stream<<images[i].timestamp.msecsSinceStartOfDay()<<"\n";
         }
         video.release();
         file.close();
@@ -158,9 +158,9 @@ void ImuCalibrationWidget::slotSaveRecord()
             QTextStream stream(&file);
             for(int j=0;j<imus[i].size();j++)
             {
-                stream<<imus[i][j].timestamp.toString("HH:mm:ss:zzz")<<"\t";
-                stream<<imus[i][j].ax<<"\t"<<imus[i][j].ay<<"\t"<<imus[i][j].az<<"\t";
-                stream<<imus[i][j].qw<<"\t"<<imus[i][j].qx<<"\t"<<imus[i][j].qy<<"\t"<<imus[i][j].qz<<"\n";
+                stream<<imus[i][j].timestamp.msecsSinceStartOfDay()<<"\t";
+                stream<<imus[i][j].qw<<"\t"<<imus[i][j].qx<<"\t"<<imus[i][j].qy<<"\t"<<imus[i][j].qz<<"\t";
+                stream<<imus[i][j].ax<<"\t"<<imus[i][j].ay<<"\t"<<imus[i][j].az<<"\n";
             }
             file.close();
         }

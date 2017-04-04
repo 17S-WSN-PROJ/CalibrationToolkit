@@ -77,3 +77,49 @@ NODE_EXFUNC_DEF_EXPORT(bool, main, RazorASCII)
     outputdata->qz=imudata[10].trimmed().toDouble();
 	return 1;
 }
+//=================================================
+//Extended node functions ( RazorFireFly )
+
+//If you don't need to initialize node, you can delete this code segment
+NODE_EXFUNC_DEF_EXPORT(bool, initializeNode, RazorFireFly)
+{
+	NOUNUSEDWARNING;
+    auto vars=NODE_VARS;
+    //vars->setInputPortObtainDataBehavior(0,ObtainBehavior::GrabOldest);
+	return 1;
+}
+
+//As an extended main function, if you delete this code segment, original main function will be used
+NODE_EXFUNC_DEF_EXPORT(bool, main, RazorFireFly)
+{
+	NOUNUSEDWARNING;
+    auto portdata = PORT_DATA(0,0);
+    auto outputdata = NODE_DATA;
+
+    outputdata->timestamp=portdata->timestamp;
+    QList<QByteArray> imudata=portdata->message.split(',');
+    if(imudata.size()==13)
+    {
+        outputdata->imutimestamp=imudata[0].trimmed().toUInt();
+        outputdata->deviceid="0";
+        outputdata->ax=imudata[1].trimmed().toDouble();
+        outputdata->ay=imudata[2].trimmed().toDouble();
+        outputdata->az=imudata[3].trimmed().toDouble();
+        outputdata->rx=imudata[4].trimmed().toDouble();
+        outputdata->ry=imudata[5].trimmed().toDouble();
+        outputdata->rz=imudata[6].trimmed().toDouble();
+        outputdata->x=0;
+        outputdata->y=0;
+        outputdata->z=0;
+        outputdata->qw=imudata[7].trimmed().toDouble();
+        outputdata->qx=imudata[8].trimmed().toDouble();
+        outputdata->qy=imudata[9].trimmed().toDouble();
+        outputdata->qz=imudata[10].trimmed().toDouble();
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
