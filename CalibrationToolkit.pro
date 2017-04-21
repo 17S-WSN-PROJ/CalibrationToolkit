@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += widgets opengl xml serialport
+QT       += widgets opengl xml serialport charts
 
 TARGET = CalibrationToolkit
 TEMPLATE = lib
@@ -23,7 +23,8 @@ SOURCES += \
     cameracalibrationwidget.cpp \
     ImuCalibration.cpp \
     imucalibrationwidget.cpp \
-    ImuLogger.cpp
+    ImuLogger.cpp \
+    ImageLogger.cpp
 
 HEADERS += \
     CameraHub.h \
@@ -37,7 +38,8 @@ HEADERS += \
     cameracalibrationwidget.h \
     ImuCalibration.h \
     imucalibrationwidget.h \
-    ImuLogger.h
+    ImuLogger.h \
+    ImageLogger.h
 
 
 INCLUDEPATH += /usr/local/include

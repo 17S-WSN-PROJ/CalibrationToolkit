@@ -1,0 +1,17 @@
+N,CameraHub::Camera,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
+N,ImuCalibration::CameraRecorder,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,2,0
+N,ImuDecoder::IMUDecoder0::RazorASCII,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,1
+N,ImuDecoder::IMUDecoder1::RazorASCII,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,1
+N,ImuHub::IMU0,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
+N,ImuHub::IMU1,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
+N,ImuLogger::IMULogger0,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
+N,ImuLogger::IMULogger1,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
+N,ImuLogger::IMUStaticLogger0,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
+N,ImuLogger::IMUStaticLogger1,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
+E,CameraHub::Camera,0,ImuCalibration::CameraRecorder,0
+E,ImuDecoder::IMUDecoder0::RazorASCII,0,ImuLogger::IMULogger0,0
+E,ImuDecoder::IMUDecoder0::RazorASCII,0,ImuLogger::IMUStaticLogger0,0
+E,ImuDecoder::IMUDecoder1::RazorASCII,0,ImuLogger::IMULogger1,0
+E,ImuDecoder::IMUDecoder1::RazorASCII,0,ImuLogger::IMUStaticLogger1,0
+E,ImuHub::IMU0,0,ImuDecoder::IMUDecoder0::RazorASCII,0
+E,ImuHub::IMU1,0,ImuDecoder::IMUDecoder1::RazorASCII,0

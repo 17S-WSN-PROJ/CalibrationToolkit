@@ -1,9 +1,10 @@
-#ifndef IMULOGGER
-#define IMULOGGER
+#ifndef IMAGELOOGER
+#define IMAGELOOGER
 
 //=================================================
 //Please add headers here:
-#include <ImuDecoder.h>
+#include <CameraHub.h>
+#include <opencv2/opencv.hpp>
 #include <QFile>
 #include <QTextStream>
 
@@ -16,7 +17,7 @@ namespace RobotSDK_Module
 //Node configuration
 
 #undef NODE_CLASS
-#define NODE_CLASS ImuLogger
+#define NODE_CLASS ImageLogger
 
 #undef INPUT_PORT_NUM
 #define INPUT_PORT_NUM 1
@@ -43,10 +44,13 @@ class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
     ADD_VAR(QString, path, ".")
-    ADD_VAR(QString, filename, "IMU.txt")
+    ADD_VAR(QString, filename, "video")
+    ADD_VAR(double, fps, 30)
+    ADD_VAR(int, width, 640)
+    ADD_VAR(int, height, 480)
 public:
-    QFile file;
-    QTextStream stream;
+    QVector<QTime> timestamps;
+    QVector<cv::Mat> images;
 };
 
 //=================================================

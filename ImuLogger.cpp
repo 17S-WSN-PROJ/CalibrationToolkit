@@ -26,7 +26,7 @@ NODE_FUNC_DEF_EXPORT(bool, openNode)
 {
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
-    vars->file.setFileName(vars->filename);
+    vars->file.setFileName(vars->path+QString("/")+vars->filename);
     if(vars->file.open(QIODevice::WriteOnly|QIODevice::Text))
     {
         vars->stream.setDevice(&(vars->file));
