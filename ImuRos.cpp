@@ -69,9 +69,18 @@ NODE_FUNC_DEF_EXPORT(bool, main)
 
         geometry_msgs::PoseStamped posemsg;
         posemsg.header=imumsg.header;
-        posemsg.pose.position.x=data->x;
-        posemsg.pose.position.y=data->y;
-        posemsg.pose.position.z=data->z;
+        if(vars->SetPose)
+        {
+            posemsg.pose.position.x=vars->x;
+            posemsg.pose.position.y=vars->y;
+            posemsg.pose.position.z=vars->z;
+        }
+        else
+        {
+            posemsg.pose.position.x=data->x;
+            posemsg.pose.position.y=data->y;
+            posemsg.pose.position.z=data->z;
+        }
         posemsg.pose.orientation=imumsg.orientation;
         vars->posepub->sendMessage(posemsg);
 

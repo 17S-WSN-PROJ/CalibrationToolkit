@@ -42,11 +42,12 @@ class NODE_PARAMS_TYPE : public NODE_PARAMS_BASE_TYPE
 class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
+    ADD_VAR(QString, deviceid, 0)
     ADD_VAR(QString, path, ".")
     ADD_VAR(QString, filename, "IMU.txt")
 public:
-    QFile file;
-    QTextStream stream;
+    QVector<QTime> timestamps;
+    QVector< QVector<double> > imudata;
 };
 
 //=================================================

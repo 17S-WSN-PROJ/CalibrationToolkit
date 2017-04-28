@@ -24,7 +24,9 @@ SOURCES += \
     ImuCalibration.cpp \
     imucalibrationwidget.cpp \
     ImuLogger.cpp \
-    ImageLogger.cpp
+    ImageLogger.cpp \
+    ImuHubRec.cpp \
+    ImuHubSim.cpp
 
 HEADERS += \
     CameraHub.h \
@@ -39,7 +41,9 @@ HEADERS += \
     ImuCalibration.h \
     imucalibrationwidget.h \
     ImuLogger.h \
-    ImageLogger.h
+    ImageLogger.h \
+    ImuHubRec.h \
+    ImuHubSim.h
 
 
 INCLUDEPATH += /usr/local/include

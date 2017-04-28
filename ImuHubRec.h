@@ -1,12 +1,11 @@
-#ifndef IMUROS
-#define IMUROS
+#ifndef IMUHUBREC
+#define IMUHUBREC
 
 //=================================================
 //Please add headers here:
-#include<ImuDecoder.h>
-#include<sensor_msgs/Imu.h>
-#include<geometry_msgs/PoseStamped.h>
-#include<rosinterface.h>
+#include <ImuHub.h>
+#include <QFile>
+#include <QTextStream>
 
 //=================================================
 #include<RobotSDK.h>
@@ -17,7 +16,7 @@ namespace RobotSDK_Module
 //Node configuration
 
 #undef NODE_CLASS
-#define NODE_CLASS ImuRos
+#define NODE_CLASS ImuHubRec
 
 #undef INPUT_PORT_NUM
 #define INPUT_PORT_NUM 1
@@ -43,21 +42,11 @@ class NODE_PARAMS_TYPE : public NODE_PARAMS_BASE_TYPE
 class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
-    ADD_VAR(QString, deviceid, 0)
-    int seqid;
-    ADD_VAR(QString, frame_id, "/imu")
-    ADD_VAR(QString, imutopic, "/imu")
-    ADD_VAR(QString, posetopic, "/imupose")
-    ADD_VAR(u_int32_t, queuesize, 1000)
-    ADD_VAR(bool, SetPose, true)
-    ADD_VAR(double, x, 0)
-    ADD_VAR(double, y, 0)
-    ADD_VAR(double, z, 0)
+    ADD_VAR(QString, path, ".")
+    ADD_VAR(QString, filename, "IMU.txt")
 public:
-    typedef ROSPub<sensor_msgs::Imu> rosimupub;
-    ADD_INTERNAL_QOBJECT_TRIGGER(rosimupub,imupub,1,imutopic,queuesize)
-    typedef ROSPub<geometry_msgs::PoseStamped> rosposepub;
-    ADD_INTERNAL_QOBJECT_TRIGGER(rosposepub,posepub,1,posetopic,queuesize)
+    QVector<QTime> timestamps;
+    QVector<QByteArray> imudata;
 };
 
 //=================================================

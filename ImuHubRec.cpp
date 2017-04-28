@@ -1,4 +1,4 @@
-#include"ImageLogger.h"
+#include"ImuHubRec.h"
 using namespace RobotSDK_Module;
 
 //If you need to use extended node, please uncomment below and comment the using of default node
@@ -7,7 +7,7 @@ USE_DEFAULT_NODE
 
 //=================================================
 //Uncomment below PORT_DECL and set input node class name
-PORT_DECL(0, CameraHub)
+PORT_DECL(0, ImuHub)
 
 //=================================================
 //Original node functions
@@ -17,7 +17,7 @@ NODE_FUNC_DEF_EXPORT(bool, initializeNode)
 {
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
-    //vars->setInputPortObtainDataBehavior(0,GrabOldest);
+    vars->setInputPortObtainDataBehavior(0, GrabOldest);
 	return 1;
 }
 
@@ -27,8 +27,8 @@ NODE_FUNC_DEF_EXPORT(bool, openNode)
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
     vars->timestamps.clear();
-    vars->images.clear();
-    return 1;
+    vars->imudata.clear();
+	return 1;
 }
 
 //If you don't need to manually close node, you can delete this code segment
@@ -38,29 +38,16 @@ NODE_FUNC_DEF_EXPORT(bool, closeNode)
     auto vars=NODE_VARS;
     if(vars->timestamps.size()>0)
     {
-        QString timefile=vars->path+QString("/")+vars->filename+QString(".txt");
-        QFile file(timefile);
+        QString filename=vars->path+QString("/")+vars->filename;
+        QFile file(filename);
         file.open(QIODevice::WriteOnly|QIODevice::Text);
         QTextStream stream(&file);
         for(int i=0;i<vars->timestamps.size();i++)
         {
-            stream<<vars->timestamps[i].msecsSinceStartOfDay()<<"\n";
+            stream<<vars->timestamps[i].msecsSinceStartOfDay()<<"\t";
+            stream<<vars->imudata[i]<<"\n";
         }
         file.close();
-    }
-    if(vars->images.size()>0)
-    {
-        QString videofile=vars->path+QString("/")+vars->filename+QString(".avi");
-        cv::Size framesize=vars->images[0].size();
-        cv::VideoWriter video(videofile.toStdString(),CV_FOURCC('M','J','P','G'),vars->fps,framesize);
-        for(int i=0;i<vars->images.size();i++)
-        {
-            cv::Mat image;
-            cv::cvtColor(vars->images[i],image,cv::COLOR_BGR2RGB);
-            video<<image;
-        }
-        video.release();
-        vars->images.clear();
     }
 	return 1;
 }
@@ -71,7 +58,9 @@ NODE_FUNC_DEF_EXPORT(bool, main)
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
     auto data=PORT_DATA(0,0);
+
     vars->timestamps.push_back(data->timestamp);
-    vars->images.push_back(data->cvimage);
+    vars->imudata.push_back(data->message);
+
 	return 1;
 }

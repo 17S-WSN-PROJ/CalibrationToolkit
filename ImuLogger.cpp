@@ -26,16 +26,9 @@ NODE_FUNC_DEF_EXPORT(bool, openNode)
 {
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
-    vars->file.setFileName(vars->path+QString("/")+vars->filename);
-    if(vars->file.open(QIODevice::WriteOnly|QIODevice::Text))
-    {
-        vars->stream.setDevice(&(vars->file));
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
+    vars->timestamps.clear();
+    vars->imudata.clear();
+    return 1;
 }
 
 //If you don't need to manually close node, you can delete this code segment
@@ -43,7 +36,23 @@ NODE_FUNC_DEF_EXPORT(bool, closeNode)
 {
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
-    vars->file.close();
+    if(vars->timestamps.size()>0)
+    {
+        QString filename=vars->path+QString("/")+vars->filename+vars->deviceid+QString(".txt");
+        QFile file(filename);
+        file.open(QIODevice::WriteOnly|QIODevice::Text);
+        QTextStream stream(&file);
+        for(int i=0;i<vars->timestamps.size();i++)
+        {
+            stream<<vars->timestamps[i].msecsSinceStartOfDay();
+            for(int j=0;j<7;j++)
+            {
+                stream<<"\t"<<QString::number(vars->imudata[i][j],'f',6);
+            }
+            stream<<"\n";
+        }
+        file.close();
+    }
 	return 1;
 }
 
@@ -53,13 +62,23 @@ NODE_FUNC_DEF_EXPORT(bool, main)
 	NOUNUSEDWARNING;
     auto vars=NODE_VARS;
     auto data=PORT_DATA(0,0);
-    vars->stream<<data->timestamp.msecsSinceStartOfDay()<<"\t";
-    vars->stream<<QString::number(data->qw,'f',6)<<"\t";
-    vars->stream<<QString::number(data->qx,'f',6)<<"\t";
-    vars->stream<<QString::number(data->qy,'f',6)<<"\t";
-    vars->stream<<QString::number(data->qz,'f',6)<<"\t";
-    vars->stream<<QString::number(data->ax,'f',6)<<"\t";
-    vars->stream<<QString::number(data->ay,'f',6)<<"\t";
-    vars->stream<<QString::number(data->az,'f',6)<<"\n";
-	return 1;
+
+    if(data->deviceid==vars->deviceid)
+    {
+        vars->timestamps.push_back(data->timestamp);
+        QVector<double> imudata;
+        imudata.push_back(data->qw);
+        imudata.push_back(data->qx);
+        imudata.push_back(data->qy);
+        imudata.push_back(data->qz);
+        imudata.push_back(data->ax);
+        imudata.push_back(data->ay);
+        imudata.push_back(data->az);
+        vars->imudata.push_back(imudata);
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }

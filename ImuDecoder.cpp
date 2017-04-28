@@ -98,23 +98,24 @@ NODE_EXFUNC_DEF_EXPORT(bool, main, RazorFireFly)
 
     outputdata->timestamp=portdata->timestamp;
     QList<QByteArray> imudata=portdata->message.split(',');
-    if(imudata.size()==13)
+    if(imudata.size()==9)
     {
-        outputdata->imutimestamp=imudata[0].trimmed().toUInt();
-        outputdata->deviceid="0";
-        outputdata->ax=imudata[1].trimmed().toDouble();
-        outputdata->ay=imudata[2].trimmed().toDouble();
-        outputdata->az=imudata[3].trimmed().toDouble();
-        outputdata->rx=imudata[4].trimmed().toDouble();
-        outputdata->ry=imudata[5].trimmed().toDouble();
-        outputdata->rz=imudata[6].trimmed().toDouble();
+
+        outputdata->deviceid=imudata[0].trimmed();
+        outputdata->imutimestamp=imudata[1].trimmed().toUInt();
+        outputdata->ax=imudata[2].trimmed().toDouble();
+        outputdata->ay=imudata[3].trimmed().toDouble();
+        outputdata->az=imudata[4].trimmed().toDouble();
+        outputdata->rx=0;
+        outputdata->ry=0;
+        outputdata->rz=0;
         outputdata->x=0;
         outputdata->y=0;
         outputdata->z=0;
-        outputdata->qw=imudata[7].trimmed().toDouble();
-        outputdata->qx=imudata[8].trimmed().toDouble();
-        outputdata->qy=imudata[9].trimmed().toDouble();
-        outputdata->qz=imudata[10].trimmed().toDouble();
+        outputdata->qw=imudata[5].trimmed().toDouble();
+        outputdata->qx=imudata[6].trimmed().toDouble();
+        outputdata->qy=imudata[7].trimmed().toDouble();
+        outputdata->qz=imudata[8].trimmed().toDouble();
         return 1;
     }
     else
