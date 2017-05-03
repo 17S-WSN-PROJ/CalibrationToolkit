@@ -5,8 +5,8 @@ N,ImuBodyVis::BodyVis, ,Config.xml,1,0
 N,ImuDecoder::DecoderLog::RazorFireFly,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,1
 N,ImuDecoder::DecoderVis::RazorFireFly,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,1
 N,ImuHub::Master,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
-N,ImuHubRec::ImuRec, ,Config.xml,1,0
-N,ImuHubSim::ImuSim, ,Config.xml,0,1
+N,ImuHubRec::ImuRec,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
+N,ImuHubSim::ImuSim,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
 N,ImuLogger::IMULogger1,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,ImuLogger::IMULogger2,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,ImuLogger::IMULogger3,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0

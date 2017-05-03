@@ -3,7 +3,9 @@
 
 //=================================================
 //Please add headers here:
+#include <ImuHub.h>
 #include <QTimer>
+#include <QFile>
 
 //=================================================
 #include<RobotSDK.h>
@@ -39,18 +41,28 @@ class NODE_PARAMS_TYPE : public NODE_PARAMS_BASE_TYPE
 //NODE_VARS_TYPE_REF(RefNodeClassName)
 class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
-
+public:
+    ADD_VAR(QString, path, ".")
+    ADD_VAR(QString, filename, "Master.txt")
+    ADD_VAR(int, interval, 10)
+public:
+    ADD_INTERNAL_QOBJECT_TRIGGER(QTimer, timer, 0)
+    ADD_INTERNAL_DEFAULT_CONNECTION(timer, timeout)
+public:
+    int id;
+    QVector<QTime> timestamps;
+    QVector<QByteArray> imudata;
 };
 
 //=================================================
 //Data types configuration
 
 //If you need to refer data type of other node class, please uncomment below and comment its own data type.
-//NODE_DATA_TYPE_REF(RefNodeClassName)
-class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
-{
+NODE_DATA_TYPE_REF(ImuHub)
+//class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
+//{
 
-};
+//};
 
 //=================================================
 //You can declare functions here

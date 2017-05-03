@@ -7,6 +7,7 @@
 #include<sensor_msgs/Imu.h>
 #include<geometry_msgs/PoseStamped.h>
 #include<rosinterface.h>
+#include<Eigen/Eigen>
 
 //=================================================
 #include<RobotSDK.h>

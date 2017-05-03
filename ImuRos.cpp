@@ -55,9 +55,15 @@ NODE_FUNC_DEF_EXPORT(bool, main)
         int msec=data->timestamp.msecsSinceStartOfDay();
         imumsg.header.stamp.sec=msec/1000;
         imumsg.header.stamp.nsec=(msec%1000)*1000000;
-        imumsg.linear_acceleration.x=data->ax;
-        imumsg.linear_acceleration.y=data->ay;
-        imumsg.linear_acceleration.z=data->az;
+
+        Eigen::Quaterniond quat(data->qw,data->qx,data->qy,data->qz);
+        Eigen::Matrix3d ori=quat.toRotationMatrix();
+        Eigen::Vector3d accel(-data->ax,-data->ay,-data->az);
+        accel = ori*accel;
+
+        imumsg.linear_acceleration.x=accel(0);//data->ax;
+        imumsg.linear_acceleration.y=accel(1);//data->ay;
+        imumsg.linear_acceleration.z=accel(2);//data->az;
         imumsg.angular_velocity.x=data->rx;
         imumsg.angular_velocity.y=data->ry;
         imumsg.angular_velocity.z=data->rz;

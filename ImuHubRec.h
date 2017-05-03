@@ -43,7 +43,7 @@ class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
     ADD_VAR(QString, path, ".")
-    ADD_VAR(QString, filename, "IMU.txt")
+    ADD_VAR(QString, filename, "Master.txt")
 public:
     QVector<QTime> timestamps;
     QVector<QByteArray> imudata;

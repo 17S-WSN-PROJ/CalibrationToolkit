@@ -44,7 +44,7 @@ NODE_FUNC_DEF_EXPORT(bool, closeNode)
         QTextStream stream(&file);
         for(int i=0;i<vars->timestamps.size();i++)
         {
-            stream<<vars->timestamps[i].msecsSinceStartOfDay()<<"\t";
+            stream<<vars->timestamps[i].msecsSinceStartOfDay()<<":";
             stream<<vars->imudata[i]<<"\n";
         }
         file.close();
@@ -60,7 +60,7 @@ NODE_FUNC_DEF_EXPORT(bool, main)
     auto data=PORT_DATA(0,0);
 
     vars->timestamps.push_back(data->timestamp);
-    vars->imudata.push_back(data->message);
+    vars->imudata.push_back(data->message.trimmed());
 
 	return 1;
 }
