@@ -1,7 +1,7 @@
 N,CameraHub::Camera,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
 N,ImageLogger::ImageLogger,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,ImageView::ImageView,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
-N,ImuBodyVis::BodyVis, ,Config.xml,1,0
+N,ImuBodyVis::BodyVis,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,0
 N,ImuDecoder::DecoderLog::RazorFireFly,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,1
 N,ImuDecoder::DecoderVis::RazorFireFly,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,1,1
 N,ImuHub::Master,/home/alexanderhmw/SDK/RobotSDK_4.0/Module/CalibrationToolkit/lib/Release/libCalibrationToolkit.so,Config.xml,0,1
