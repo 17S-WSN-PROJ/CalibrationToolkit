@@ -1,10 +1,11 @@
-#ifndef IMUDECODER
-#define IMUDECODER
+#ifndef IMUDEVICEINDICATOR
+#define IMUDEVICEINDICATOR
 
 //=================================================
 //Please add headers here:
-#include<ImuHub.h>
-
+#include <ImuDecoder.h>
+#include <QPushButton>
+#include <QLayout>
 
 //=================================================
 #include<RobotSDK.h>
@@ -15,13 +16,13 @@ namespace RobotSDK_Module
 //Node configuration
 
 #undef NODE_CLASS
-#define NODE_CLASS ImuDecoder
+#define NODE_CLASS ImuDeviceIndicator
 
 #undef INPUT_PORT_NUM
 #define INPUT_PORT_NUM 1
 
 #undef OUTPUT_PORT_NUM
-#define OUTPUT_PORT_NUM 1
+#define OUTPUT_PORT_NUM 0
 
 //=================================================
 //Params types configuration
@@ -41,8 +42,18 @@ class NODE_PARAMS_TYPE : public NODE_PARAMS_BASE_TYPE
 class NODE_VARS_TYPE : public NODE_VARS_BASE_TYPE
 {
 public:
-    ADD_VAR(QString, deviceid, "0")
-    ADD_VAR(double, quatfilter, 0.1)
+    ADD_VAR(QString, deviceids, "1,2,3,4,5,6")
+    ADD_VAR(int, refill, 10)
+public:
+    ADD_QLAYOUT(QVBoxLayout, layout)
+    ADD_QWIDGET(QPushButton, imu0)
+    ADD_QWIDGET(QPushButton, imu1)
+    ADD_QWIDGET(QPushButton, imu2)
+    ADD_QWIDGET(QPushButton, imu3)
+    ADD_QWIDGET(QPushButton, imu4)
+    ADD_QWIDGET(QPushButton, imu5)
+    QVector<int> counter;
+    QList<QString> deviceidlist;
 };
 
 //=================================================
@@ -52,13 +63,7 @@ public:
 //NODE_DATA_TYPE_REF(RefNodeClassName)
 class NODE_DATA_TYPE : public NODE_DATA_BASE_TYPE
 {
-public:
-    quint64 imutimestamp;
-    QString deviceid;
-    double ax,ay,az;
-    double rx,ry,rz;
-    double x,y,z;
-    double qw,qx,qy,qz;
+
 };
 
 //=================================================

@@ -78,31 +78,31 @@ NODE_FUNC_DEF_EXPORT(bool, main)
         if(vars->init_flags>=15)
         {
             Eigen::Vector3d fix_hip(0,0,vars->culf_length+vars->thigh_length);
-            Eigen::Vector3d forward = vars->ori_right_thigh.toRotationMatrix()*Eigen::Vector3d(0,0.1,0);
+            Eigen::Vector3d forward = vars->ori_right_thigh.toRotationMatrix()*Eigen::Vector3d(0,0.3,0);
 
 
             Eigen::Vector3d fix_right_hip = vars->ori_right_thigh.toRotationMatrix()*Eigen::Vector3d(0,0,-vars->hip_spacing/2);
+            fix_right_hip(0) = -fix_right_hip(0);
+            fix_right_hip(1) = -fix_right_hip(1);
             fix_right_hip(2) = vars->culf_length+vars->thigh_length;
 
             Eigen::Vector3d fix_left_hip = vars->ori_left_thigh.toRotationMatrix()*Eigen::Vector3d(0,0,-vars->hip_spacing/2);
-            fix_left_hip(0) = -fix_left_hip(0);
-            fix_left_hip(1) = -fix_left_hip(1);
             fix_left_hip(2) = vars->culf_length+vars->thigh_length;
 
             vars->pos_right_knee = vars->ori_right_thigh.toRotationMatrix()*Eigen::Vector3d(-vars->thigh_length,0,0);
+            vars->pos_right_knee(0) = -vars->pos_right_knee(0);
+            vars->pos_right_knee(1) = -vars->pos_right_knee(1);
             vars->pos_right_knee = fix_right_hip + vars->pos_right_knee;
 
             vars->pos_left_knee = vars->ori_left_thigh.toRotationMatrix()*Eigen::Vector3d(-vars->thigh_length,0,0);
-            vars->pos_left_knee(0) = -vars->pos_left_knee(0);
-            vars->pos_left_knee(1) = -vars->pos_left_knee(1);
             vars->pos_left_knee = fix_left_hip + vars->pos_left_knee;
 
             vars->pos_right_ankle = vars->ori_right_culf.toRotationMatrix()*Eigen::Vector3d(-vars->culf_length,0,0);
+            vars->pos_right_ankle(0) = -vars->pos_right_ankle(0);
+            vars->pos_right_ankle(1) = -vars->pos_right_ankle(1);
             vars->pos_right_ankle = vars->pos_right_knee + vars->pos_right_ankle;
 
             vars->pos_left_ankle = vars->ori_left_culf.toRotationMatrix()*Eigen::Vector3d(-vars->culf_length,0,0);
-            vars->pos_left_ankle(0) = -vars->pos_left_ankle(0);
-            vars->pos_left_ankle(1) = -vars->pos_left_ankle(1);
             vars->pos_left_ankle = vars->pos_left_knee + vars->pos_left_ankle;
 
             visualization_msgs::MarkerArray lines;
@@ -115,7 +115,7 @@ NODE_FUNC_DEF_EXPORT(bool, main)
             line.header.stamp.nsec=(msec%1000)*1000000;
             line.type = visualization_msgs::Marker::ARROW;
             line.scale.x = 0.04;
-            line.scale.y = 0.05;
+            line.scale.y = 0.08;
             line.scale.z = 0.05;
             line.points.resize(2);
 
@@ -180,12 +180,12 @@ NODE_FUNC_DEF_EXPORT(bool, main)
             lines.markers.push_back(line);
 
             line.id = lines.markers.size();
-            line.points[0].x = -forward(0);
-            line.points[0].y = -forward(1);
-            line.points[0].z = 0;
-            line.points[1].x = forward(0);
-            line.points[1].y = forward(1);
-            line.points[1].z = 0;
+            line.points[0].x = forward(0);
+            line.points[0].y = forward(1);
+            line.points[0].z = -0.1;
+            line.points[1].x = -forward(0);
+            line.points[1].y = -forward(1);
+            line.points[1].z = -0.1;
             line.color.r = 1.0; line.color.g = 1.0; line.color.b = 0.0, line.color.a = 1.0;
             lines.markers.push_back(line);
 

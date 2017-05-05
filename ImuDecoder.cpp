@@ -93,6 +93,7 @@ NODE_EXFUNC_DEF_EXPORT(bool, initializeNode, RazorFireFly)
 NODE_EXFUNC_DEF_EXPORT(bool, main, RazorFireFly)
 {
 	NOUNUSEDWARNING;
+    auto vars = NODE_VARS;
     auto portdata = PORT_DATA(0,0);
     auto outputdata = NODE_DATA;
 
@@ -116,6 +117,18 @@ NODE_EXFUNC_DEF_EXPORT(bool, main, RazorFireFly)
         outputdata->qx=imudata[6].trimmed().toDouble();
         outputdata->qy=imudata[7].trimmed().toDouble();
         outputdata->qz=imudata[8].trimmed().toDouble();
+        double qnorm = sqrt(pow(outputdata->qw,2.0) + pow(outputdata->qx,2.0) + pow(outputdata->qy,2.0) + pow(outputdata->qz,2.0));
+        if(qnorm - 1 > vars->quatfilter)
+        {
+            return 0;
+        }
+//        else
+//        {
+//            outputdata->qw/=qnorm;
+//            outputdata->qx/=qnorm;
+//            outputdata->qy/=qnorm;
+//            outputdata->qz/=qnorm;
+//        }
         return 1;
     }
     else
