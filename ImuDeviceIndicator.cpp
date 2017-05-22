@@ -56,6 +56,7 @@ NODE_FUNC_DEF_EXPORT(bool, openNode)
     vars->imu4->setText(vars->deviceidlist[4]);
     vars->imu5->setStyleSheet("QPushButton{ background-color : red; color : black }");
     vars->imu5->setText(vars->deviceidlist[5]);
+    vars->timer->start(vars->timecount);
 	return 1;
 }
 
@@ -75,6 +76,7 @@ NODE_FUNC_DEF_EXPORT(bool, closeNode)
     vars->imu3->setStyleSheet("QPushButton{ background-color : red; color : black }");
     vars->imu4->setStyleSheet("QPushButton{ background-color : red; color : black }");
     vars->imu5->setStyleSheet("QPushButton{ background-color : red; color : black }");
+    vars->timer->stop();
 	return 1;
 }
 
@@ -83,6 +85,39 @@ NODE_FUNC_DEF_EXPORT(bool, main)
 {
 	NOUNUSEDWARNING;
     auto vars = NODE_VARS;
+    if(IS_INTERNAL_TRIGGER)
+    {
+        for(int i=0;i<6;i++)
+        {
+            vars->counter[i]--;
+            if(vars->counter[i]<0)
+            {
+                vars->counter[i]=0;
+                switch(i)
+                {
+                case 0:
+                    vars->imu0->setStyleSheet("QPushButton{ background-color : red; color : black }");
+                    break;
+                case 1:
+                    vars->imu1->setStyleSheet("QPushButton{ background-color : red; color : black }");
+                    break;
+                case 2:
+                    vars->imu2->setStyleSheet("QPushButton{ background-color : red; color : black }");
+                    break;
+                case 3:
+                    vars->imu3->setStyleSheet("QPushButton{ background-color : red; color : black }");
+                    break;
+                case 4:
+                    vars->imu4->setStyleSheet("QPushButton{ background-color : red; color : black }");
+                    break;
+                case 5:
+                    vars->imu5->setStyleSheet("QPushButton{ background-color : red; color : black }");
+                    break;
+                }
+            }
+        }
+        return 1;
+    }
     auto data = PORT_DATA(0,0);
     for(int i=0;i<6;i++)
     {

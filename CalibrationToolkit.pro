@@ -28,7 +28,8 @@ SOURCES += \
     ImuHubRec.cpp \
     ImuHubSim.cpp \
     ImuBodyVis.cpp \
-    ImuDeviceIndicator.cpp
+    ImuDeviceIndicator.cpp \
+    VideoReplay.cpp
 
 HEADERS += \
     CameraHub.h \
@@ -47,7 +48,8 @@ HEADERS += \
     ImuHubRec.h \
     ImuHubSim.h \
     ImuBodyVis.h \
-    ImuDeviceIndicator.h
+    ImuDeviceIndicator.h \
+    VideoReplay.h
 
 
 INCLUDEPATH += /usr/local/include

@@ -17,7 +17,7 @@ NODE_FUNC_DEF_EXPORT(bool, initializeNode)
 {
 	NOUNUSEDWARNING;
     auto vars = NODE_VARS;
-    if(vars->markerpub==NULL)
+    if(vars->markerpub==NULL || vars->dispub==NULL || vars->latangleftpub==NULL || vars->latangrightpub==NULL)
     {
         return 0;
     }
@@ -37,6 +37,9 @@ NODE_FUNC_DEF_EXPORT(bool, openNode)
     vars->seqid=0;
     vars->init_flags=0;
     vars->markerpub->resetTopic(vars->markertopic,vars->queuesize);
+    vars->dispub->resetTopic(vars->distopic,vars->queuesize);
+    vars->latangleftpub->resetTopic(vars->latanglefttopic,vars->queuesize);
+    vars->latangrightpub->resetTopic(vars->latangrighttopic,vars->queuesize);
 	return 1;
 }
 
@@ -78,8 +81,13 @@ NODE_FUNC_DEF_EXPORT(bool, main)
         if(vars->init_flags>=15)
         {
             Eigen::Vector3d fix_hip(0,0,vars->culf_length+vars->thigh_length);
-            Eigen::Vector3d forward = vars->ori_right_thigh.toRotationMatrix()*Eigen::Vector3d(0,0.3,0);
-
+            Eigen::Vector3d forward_right = vars->ori_right_thigh.toRotationMatrix()*Eigen::Vector3d(0,0.3,0);
+            forward_right(0) = -forward_right(0);
+            forward_right(1) = -forward_right(1);
+            forward_right(2) = 0;
+            Eigen::Vector3d forward_left = vars->ori_left_thigh.toRotationMatrix()*Eigen::Vector3d(0,-0.3,0);
+            forward_left(2) = 0;
+            Eigen::Vector3d forward = (forward_right+forward_left)/2;
 
             Eigen::Vector3d fix_right_hip = vars->ori_right_thigh.toRotationMatrix()*Eigen::Vector3d(0,0,-vars->hip_spacing/2);
             fix_right_hip(0) = -fix_right_hip(0);
@@ -180,16 +188,53 @@ NODE_FUNC_DEF_EXPORT(bool, main)
             lines.markers.push_back(line);
 
             line.id = lines.markers.size();
-            line.points[0].x = forward(0);
-            line.points[0].y = forward(1);
+            line.points[0].x = -forward(0);
+            line.points[0].y = -forward(1);
             line.points[0].z = -0.1;
-            line.points[1].x = -forward(0);
-            line.points[1].y = -forward(1);
+            line.points[1].x = forward(0);
+            line.points[1].y = forward(1);
             line.points[1].z = -0.1;
             line.color.r = 1.0; line.color.g = 1.0; line.color.b = 0.0, line.color.a = 1.0;
             lines.markers.push_back(line);
 
             vars->markerpub->sendMessage(lines);
+
+
+            std_msgs::Float64 float64_msg;
+
+            Eigen::Vector3d feet_vec = vars->pos_right_ankle-vars->pos_left_ankle;
+            double forward_norm = forward.norm();
+//            qInfo("Forward: %f, %f, %f, %f", forward(0), forward(1), forward(2), forward_norm);
+            if(forward_norm>0)
+            {
+                double feet_dis = feet_vec.dot(forward)/forward_norm;
+//                qInfo("Feet: %f, %f, %f, %f, %f", feet_vec(0), feet_vec(1), feet_vec(2), feet_vec.dot(forward), feet_dis);
+
+                float64_msg.data=feet_dis;
+                vars->dispub->sendMessage(float64_msg);
+            }
+
+            Eigen::Vector3d left_lateral(-forward(1), forward(0), 0);
+            Eigen::Vector3d right_lateral(forward(1), -forward(0), 0);
+
+            if(left_lateral.norm()>0 && right_lateral.norm()>0)
+            {
+                Eigen::Vector3d left_thigh=vars->pos_left_knee - fix_left_hip;
+                Eigen::Vector3d right_thigh=vars->pos_right_knee - fix_right_hip;
+
+                double left_z = left_thigh.dot(Eigen::Vector3d(0,0,1));
+                double left_lat = left_thigh.dot(left_lateral)/left_lateral.norm();
+                double right_z = right_thigh.dot(Eigen::Vector3d(0,0,1));
+                double right_lat = right_thigh.dot(right_lateral)/right_lateral.norm();
+
+                double left_lat_ang = atan2(left_z, left_lat);
+                double right_lat_ang = atan2(right_z, right_lat);
+
+                float64_msg.data = left_lat_ang;
+                vars->latangleftpub->sendMessage(float64_msg);
+                float64_msg.data = right_lat_ang;
+                vars->latangrightpub->sendMessage(float64_msg);
+            }
         }
     }
 	return 1;

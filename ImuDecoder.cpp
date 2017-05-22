@@ -118,7 +118,7 @@ NODE_EXFUNC_DEF_EXPORT(bool, main, RazorFireFly)
         outputdata->qy=imudata[7].trimmed().toDouble();
         outputdata->qz=imudata[8].trimmed().toDouble();
         double qnorm = sqrt(pow(outputdata->qw,2.0) + pow(outputdata->qx,2.0) + pow(outputdata->qy,2.0) + pow(outputdata->qz,2.0));
-        if(qnorm - 1 > vars->quatfilter)
+        if(fabs(qnorm - 1) > vars->quatfilter)
         {
             return 0;
         }

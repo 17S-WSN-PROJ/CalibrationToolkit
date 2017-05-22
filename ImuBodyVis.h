@@ -6,6 +6,7 @@
 #include <ImuDecoder.h>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
+#include <std_msgs/Float64.h>
 #include <rosinterface.h>
 #include <Eigen/Eigen>
 
@@ -55,10 +56,18 @@ public:
     int seqid;
     ADD_VAR(QString, frame_id, "/body")
     ADD_VAR(QString, markertopic, "/body")
+    ADD_VAR(QString, distopic, "/feet_dis")
+    ADD_VAR(QString, latanglefttopic, "/body_lat_angle_left")
+    ADD_VAR(QString, latangrighttopic, "/body_lat_angle_right")
     ADD_VAR(u_int32_t, queuesize, 1000)
+
 public:
     typedef ROSPub<visualization_msgs::MarkerArray> rosmarkerpub;
     ADD_INTERNAL_QOBJECT_TRIGGER(rosmarkerpub, markerpub, 1, markertopic, queuesize)
+    typedef ROSPub<std_msgs::Float64> rosfloat64pub;
+    ADD_INTERNAL_QOBJECT_TRIGGER(rosfloat64pub, dispub, 1, distopic, queuesize)
+    ADD_INTERNAL_QOBJECT_TRIGGER(rosfloat64pub, latangleftpub, 1, latanglefttopic, queuesize)
+    ADD_INTERNAL_QOBJECT_TRIGGER(rosfloat64pub, latangrightpub, 1, latangrighttopic, queuesize)
 public:
     int init_flags;
     Eigen::Quaterniond ori_right_thigh;

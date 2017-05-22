@@ -35,6 +35,7 @@ NODE_FUNC_DEF_EXPORT(bool, openNode)
             vars->timestamps.push_back(QTime::fromMSecsSinceStartOfDay(timestamp));
             vars->imudata.push_back(datas[1]);
         }
+        file.close();
         vars->id=0;
         vars->timer->start(vars->interval);
         return 1;
